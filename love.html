@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Love Check ❤️</title>
+
+<style>
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+  font-family:Arial,"Noto Sans Devanagari",sans-serif;
+  background:linear-gradient(135deg,#ff758c,#ff7eb3);
+  color:#222;
+}
+
+.card{
+  width:100%;
+  max-width:520px;
+  background:#fff;
+  border-radius:24px;
+  padding:28px;
+  box-shadow:0 15px 45px rgba(0,0,0,.22);
+}
+
+h1{
+  text-align:center;
+  margin:0 0 5px;
+  font-size:30px;
+}
+
+.sub{
+  text-align:center;
+  color:#777;
+  font-size:12px;
+  margin:0 0 24px;
+}
+
+label{
+  display:block;
+  font-weight:700;
+  margin:16px 0 7px;
+}
+
+input{
+  width:100%;
+  padding:13px 14px;
+  border:1px solid #ddd;
+  border-radius:12px;
+  font-size:16px;
+  outline:none;
+}
+
+input:focus{
+  border-color:#ff5c8a;
+}
+
+.q{
+  padding:14px;
+  background:#fff5f8;
+  border-radius:14px;
+  margin-top:12px;
+}
+
+.q p{
+  margin:0 0 10px;
+  font-weight:700;
+  line-height:1.5;
+}
+
+.options{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:6px;
+}
+
+.options label{
+  margin:0;
+  padding:9px 3px;
+  text-align:center;
+  background:#fff;
+  border:1px solid #ddd;
+  border-radius:9px;
+  font-size:13px;
+  cursor:pointer;
+}
+
+.options input{
+  display:none;
+}
+
+.options label:has(input:checked){
+  background:#ff5c8a;
+  color:#fff;
+  border-color:#ff5c8a;
+}
+
+button{
+  width:100%;
+  border:0;
+  padding:15px;
+  border-radius:14px;
+  margin-top:22px;
+  background:#ff3f78;
+  color:white;
+  font-size:17px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+button:hover{
+  background:#e83269;
+}
+
+#result{
+  display:none;
+  margin-top:24px;
+  text-align:center;
+  padding:22px;
+  border-radius:18px;
+  background:#fff5f8;
+}
+
+.score{
+  font-size:58px;
+  font-weight:800;
+  color:#ff3f78;
+}
+
+.bar{
+  height:13px;
+  background:#eee;
+  border-radius:20px;
+  overflow:hidden;
+  margin:12px 0 18px;
+}
+
+.fill{
+  height:100%;
+  width:0;
+  background:#ff3f78;
+  transition:width 1s;
+}
+
+.detail{
+  text-align:left;
+  margin-top:15px;
+}
+
+.detail div{
+  display:flex;
+  justify-content:space-between;
+  margin:10px 0;
+}
+
+.note{
+  font-size:12px;
+  color:#777;
+  line-height:1.6;
+  margin-top:18px;
+}
+
+.reset{
+  background:#222;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+  <h1>❤️ Himraj Shahi ठकुरी</h1>
+
+  <p class="sub">
+    Simikot 07 Dandafaya Thaya Humla Karnali, Nepal <br>
+ <a href = "https://youtube.com/@humlaambient?si=pohr4KfAG8L_byIF" target="HumlaAmbient">YouTube visit गर्नुहोस् 🙏</a>
+ </p>
+
+  <label>तपाईंको नाम लेख्नुहोस्</label>
+  <input
+    id="name1"
+    placeholder="जस्तै:Himraj Shahi">
+<label>साथीको नाम लेख्नुहोस्</label>
+  <input
+    id="name2"
+    placeholder="जस्तै हिमराजकी💞💔❤️"
+  >
+
+  <div id="questions"></div>
+
+  <button onclick="checkLove()">
+    💖 प्रेम जाँच गर्नुहोस्
+  </button>
+
+  <div id="result">
+
+    <div id="names"></div>
+
+    <div class="score" id="score">
+      0%
+    </div>
+
+    <div class="bar">
+      <div class="fill" id="fill"></div>
+    </div>
+
+    <h2 id="title"></h2>
+
+    <p id="message"></p>
+
+    <div class="detail">
+
+      <div>
+        <span>❤️ हेरचाह</span>
+        <b id="care"></b>
+      </div>
+
+      <div>
+        <span>🤝 विश्वास</span>
+        <b id="trust"></b>
+      </div>
+
+      <div>
+        <span>💬 कुराकानी</span>
+        <b id="communication"></b>
+      </div>
+
+      <div>
+        <span>🌟 मिलन</span>
+        <b id="compatibility"></b>
+      </div>
+
+    </div>
+
+    <p class="note">
+      यो मनोरञ्जनात्मक प्रेम तथा सम्बन्ध मिलान जाँच हो।
+      यसले कसैको वास्तविक भावना १००% वैज्ञानिक रूपमा पत्ता लगाउन सक्दैन।
+      वास्तविक प्रेम बुझ्न विश्वास, सम्मान, इमानदार कुराकानी र व्यवहार महत्वपूर्ण हुन्छ।
+    </p>
+
+    <button
+      class="reset"
+      onclick="resetCheck()"
+    >
+      🔄 फेरि जाँच गर्नुहोस्
+    </button>
+
+  </div>
+
+</div>
+
+
+<script>
+
+const qs = [
+
+  "तपाईंहरू एक-अर्कासँग आफ्नो भावना कत्तिको खुलेर बाँड्नुहुन्छ?",
+
+  "तपाईंहरू एक-अर्कालाई कत्तिको विश्वास गर्नुहुन्छ?",
+
+  "तपाईंहरूबीच असहमति हुँदा कत्तिको राम्रोसँग कुराकानी गर्नुहुन्छ?",
+
+  "तपाईंहरू एक-अर्कालाई कत्तिको सहयोग र साथ दिनुहुन्छ?",
+
+  "तपाईंहरू एक-अर्काको विचार र सीमाको कत्तिको सम्मान गर्नुहुन्छ?",
+
+  "सँगै समय बिताउँदा तपाईंहरू कत्तिको खुसी महसुस गर्नुहुन्छ?",
+
+  "समस्या पर्दा मिलेर समाधान गर्न सकिन्छ भन्ने विश्वास कत्तिको छ?",
+
+  "तपाईंहरूको माया र हेरचाह व्यवहारमा कत्तिको निरन्तर देखिन्छ?"
+
+];
+
+
+const box = document.getElementById("questions");
+
+
+qs.forEach((q,i)=>{
+
+  const div = document.createElement("div");
+
+  div.className = "q";
+
+  div.innerHTML = `
+
+    <p>${i+1}. ${q}</p>
+
+    <div class="options">
+
+      <label>
+        १
+        <input
+          type="radio"
+          name="q${i}"
+          value="1"
+        >
+      </label>
+
+      <label>
+        २
+        <input
+          type="radio"
+          name="q${i}"
+          value="2"
+        >
+      </label>
+
+      <label>
+        ३
+        <input
+          type="radio"
+          name="q${i}"
+          value="3"
+        >
+      </label>
+
+      <label>
+        ४
+        <input
+          type="radio"
+          name="q${i}"
+          value="4"
+        >
+      </label>
+
+      <label>
+        ५
+        <input
+          type="radio"
+          name="q${i}"
+          value="5"
+        >
+      </label>
+
+    </div>
+  `;
+
+  box.appendChild(div);
+
+});
+
+
+function getAnswers(){
+
+  return qs.map((_,i)=>{
+
+    const x =
+      document.querySelector(
+        `input[name="q${i}"]:checked`
+      );
+
+    return x ? Number(x.value) : null;
+
+  });
+
+}
+
+
+function checkLove(){
+
+  const a = getAnswers();
+
+  if(a.includes(null)){
+
+    alert(
+      "कृपया सबै ८ वटा प्रश्नको उत्तर दिनुहोस् ❤️"
+    );
+
+    return;
+  }
+
+
+  const name1 =
+    document.getElementById("name1")
+    .value
+    .trim() || "तपाईं";
+
+
+  const name2 =
+    document.getElementById("name2")
+    .value
+    .trim() || "तपाईंको साथी";
+
+
+  const total =
+    a.reduce((s,v)=>s+v,0);
+
+
+  const pct =
+    Math.round(
+      ((total-8)/(40-8))*100
+    );
+
+
+  const care =
+    Math.round(
+      ((a[3]+a[4]+a[5]+a[7]-4)/16)*100
+    );
+
+
+  const trust =
+    Math.round(
+      ((a[1]+a[6]-2)/8)*100
+    );
+
+
+  const communication =
+    Math.round(
+      ((a[0]+a[2]-2)/8)*100
+    );
+
+
+  const compatibility =
+    Math.round(
+      ((a[0]+a[1]+a[2]+a[4]+a[6]-5)/20)*100
+    );
+
+
+  let title;
+  let message;
+
+
+  if(pct >= 90){
+
+    title = "💖 धेरै बलियो सम्बन्ध";
+
+    message =
+      "तपाईंहरूको उत्तरमा विश्वास, हेरचाह र सम्बन्धको राम्रो मिलन देखिन्छ।";
+
+  }
+
+  else if(pct >= 75){
+
+    title = "❤️ बलियो सम्बन्ध";
+
+    message =
+      "तपाईंहरूको सम्बन्धमा धेरै सकारात्मक पक्षहरू देखिन्छन्।";
+
+  }
+
+  else if(pct >= 60){
+
+    title = "💕 राम्रो सम्भावना";
+
+    message =
+      "सम्बन्धको आधार राम्रो छ। केही पक्ष अझ बलियो बनाउन सकिन्छ।";
+
+  }
+
+  else if(pct >= 40){
+
+    title = "💛 अझ बुझाइ आवश्यक";
+
+    message =
+      "खुला कुराकानी र दुवैको प्रयासले सम्बन्ध अझ राम्रो बनाउन सक्छ।";
+
+  }
+
+  else{
+
+    title = "💙 एक-अर्कालाई बुझ्न समय दिनुहोस्";
+
+    message =
+      "केही महत्वपूर्ण पक्षमा मिलेर कुरा गरी सुधार गर्न सकिन्छ।";
+
+  }
+
+
+  document.getElementById("names")
+    .innerHTML =
+    `<b>${escapeHtml(name1)}</b> ❤️ <b>${escapeHtml(name2)}</b>`;
+
+
+  document.getElementById("score")
+    .textContent =
+    pct + "%";
+
+
+  document.getElementById("fill")
+    .style.width =
+    pct + "%";
+
+
+  document.getElementById("title")
+    .textContent =
+    title;
+
+
+  document.getElementById("message")
+    .textContent =
+    message;
+
+
+  document.getElementById("care")
+    .textContent =
+    care + "%";
+
+
+  document.getElementById("trust")
+    .textContent =
+    trust + "%";
+
+
+  document.getElementById("communication")
+    .textContent =
+    communication + "%";
+
+  document.getElementById("compatibility")
+    .textContent =
+    compatibility + "%";
+
+
+  document.getElementById("result")
+    .style.display =
+    "block";
+
+
+  document.getElementById("result")
+    .scrollIntoView({
+      behavior:"smooth"
+    });
+
+}
+
+
+function escapeHtml(s){
+
+  return s.replace(
+    /[&<>"']/g,
+    m => ({
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      '"':"&quot;",
+      "'":"&#039;"
+    }[m])
+  );
+
+}
+
+
+function resetCheck(){
+
+  document.getElementById("result")
+    .style.display =
+    "none";
+
+
+  document.querySelectorAll(
+    'input[type="radio"]'
+  ).forEach(
+    x => x.checked = false
+  );
+
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+</script>
+
+</body>
+</html>
